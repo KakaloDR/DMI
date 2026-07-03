@@ -1,0 +1,29 @@
+## Ignore Visual Studio & .NET temporary/build files
+[Ob]obj/
+[Bb]in/
+[Dd]ebug/
+[Rr]elease/
+
+# User-specific files
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio 2015/2017 cache/options directory
+.vs/
+# Generated files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.dbmdl
+*.lsproj
+*.userquery
+
+# Rider
+.idea/
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
