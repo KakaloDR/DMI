@@ -101,7 +101,6 @@ namespace GDM.Presentation
             if (ctrl is Button btn)
             {
                 btn.FlatStyle = FlatStyle.Flat;
-                btn.FlatAppearance.BorderSize = 1;
                 btn.Cursor = Cursors.Hand;
                 btn.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
 
@@ -109,27 +108,28 @@ namespace GDM.Presentation
 
                 if (name.Contains("guardar") || name.Contains("nuevo") || name.Contains("filtrar") || name.Contains("buscar"))
                 {
+                    btn.FlatAppearance.BorderSize = 0; // Sin bordes para un diseño 100% plano
                     btn.BackColor = Color.FromArgb(14, 165, 233); // Celeste Accent
                     btn.ForeColor = Color.White;
-                    btn.FlatAppearance.BorderColor = Color.FromArgb(14, 165, 233);
 
                     btn.MouseEnter += (s, e) => { btn.BackColor = Color.FromArgb(2, 132, 199); };
                     btn.MouseLeave += (s, e) => { btn.BackColor = Color.FromArgb(14, 165, 233); };
                 }
                 else if (name.Contains("eliminar"))
                 {
+                    btn.FlatAppearance.BorderSize = 0; // Sin bordes para un diseño 100% plano
                     btn.BackColor = Color.FromArgb(239, 68, 68); // Crimson
                     btn.ForeColor = Color.White;
-                    btn.FlatAppearance.BorderColor = Color.FromArgb(239, 68, 68);
 
                     btn.MouseEnter += (s, e) => { btn.BackColor = Color.FromArgb(220, 38, 38); };
                     btn.MouseLeave += (s, e) => { btn.BackColor = Color.FromArgb(239, 68, 68); };
                 }
-                else // Cancelar, Limpiar, etc.
+                else // Cancelar, Limpiar, Retroceder, etc.
                 {
+                    btn.FlatAppearance.BorderSize = 1;
                     btn.BackColor = Color.Transparent;
                     btn.ForeColor = Color.FromArgb(100, 116, 139); // Slate Muted
-                    btn.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240); // Border Light
+                    btn.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240); // Borde claro y suave
 
                     btn.MouseEnter += (s, e) => { 
                         btn.BackColor = Color.FromArgb(248, 250, 252);
@@ -142,7 +142,7 @@ namespace GDM.Presentation
                 }
             }
 
-            // Grillas
+            // Grillas (DataGridView)
             if (ctrl is DataGridView dgv)
             {
                 dgv.BackgroundColor = Color.White;
@@ -151,16 +151,22 @@ namespace GDM.Presentation
                 dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
                 dgv.EnableHeadersVisualStyles = false;
 
+                // Estilo de Cabeceras
                 dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(15, 41, 74); // Medical Navy
                 dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
                 dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+                dgv.ColumnHeadersHeight = 35;
+                dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 
+                // Estilo de Celdas
                 dgv.DefaultCellStyle.BackColor = Color.White;
                 dgv.DefaultCellStyle.ForeColor = Color.FromArgb(15, 23, 42);
-                dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(14, 165, 233);
-                dgv.DefaultCellStyle.SelectionForeColor = Color.White;
+                dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(224, 242, 254); // Celeste/Sky muy suave y moderno
+                dgv.DefaultCellStyle.SelectionForeColor = Color.FromArgb(15, 23, 42);   // Texto oscuro legible en selección
 
+                // Zebra striping y altura de filas
                 dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 250, 252);
+                dgv.RowTemplate.Height = 32; // Filas más altas y espaciosas, aspecto web moderno
                 dgv.RowHeadersVisible = false;
             }
 

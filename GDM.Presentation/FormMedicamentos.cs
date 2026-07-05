@@ -15,6 +15,7 @@ namespace GDM.Presentation
         private readonly MarcaBLL _marcaBll = new MarcaBLL();
         private readonly UbicacionBLL _ubiBll = new UbicacionBLL();
         private List<Medicamento> _listaOriginal = new List<Medicamento>();
+        private bool _limpiandoFormulario = false;
 
         public FormMedicamentos()
         {
@@ -193,6 +194,7 @@ namespace GDM.Presentation
 
         private void LimpiarFormulario()
         {
+            _limpiandoFormulario = true;
             txtID.Text = string.Empty;
             txtDescripcion.Text = string.Empty;
             txtDosis.Text = string.Empty;
@@ -202,15 +204,19 @@ namespace GDM.Presentation
             if (cmbMarca.Items.Count > 0) cmbMarca.SelectedIndex = 0;
             if (cmbUbicacion.Items.Count > 0) cmbUbicacion.SelectedIndex = 0;
 
-            if (dgvDatos.SelectedRows.Count > 0)
+            dgvDatos.ClearSelection();
+            if (dgvDatos.CurrentCell != null)
             {
-                dgvDatos.ClearSelection();
+                dgvDatos.CurrentCell = null;
             }
+            _limpiandoFormulario = false;
             txtDescripcion.Focus();
         }
 
         private void dgvDatos_SelectionChanged(object sender, EventArgs e)
         {
+            if (_limpiandoFormulario) return;
+
             if (dgvDatos.SelectedRows.Count > 0)
             {
                 var m = (Medicamento)dgvDatos.SelectedRows[0].DataBoundItem;

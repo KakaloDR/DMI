@@ -12,6 +12,7 @@ namespace GDM.Presentation
     {
         private readonly MedicoBLL _bll = new MedicoBLL();
         private List<Medico> _listaOriginal = new List<Medico>();
+        private bool _limpiandoFormulario = false;
 
         public FormMedicos()
         {
@@ -150,20 +151,25 @@ namespace GDM.Presentation
 
         private void LimpiarFormulario()
         {
+            _limpiandoFormulario = true;
             txtID.Text = string.Empty;
             txtNombre.Text = string.Empty;
             txtCedula.Text = string.Empty;
             txtEspecialidad.Text = string.Empty;
             cmbTanda.SelectedIndex = 0;
             cmbEstado.SelectedIndex = 0;
-            if (dgvDatos.SelectedRows.Count > 0)
+            dgvDatos.ClearSelection();
+            if (dgvDatos.CurrentCell != null)
             {
-                dgvDatos.ClearSelection();
+                dgvDatos.CurrentCell = null;
             }
+            _limpiandoFormulario = false;
         }
 
         private void dgvDatos_SelectionChanged(object sender, EventArgs e)
         {
+            if (_limpiandoFormulario) return;
+
             if (dgvDatos.SelectedRows.Count > 0)
             {
                 var m = (Medico)dgvDatos.SelectedRows[0].DataBoundItem;

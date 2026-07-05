@@ -15,6 +15,7 @@ namespace GDM.Presentation
         private readonly PacienteBLL _pacienteBll = new PacienteBLL();
         private readonly MedicamentoBLL _medBll = new MedicamentoBLL();
         private List<Visita> _listaOriginal = new List<Visita>();
+        private bool _limpiandoFormulario = false;
 
         public FormVisitas()
         {
@@ -201,6 +202,7 @@ namespace GDM.Presentation
 
         private void LimpiarFormulario()
         {
+            _limpiandoFormulario = true;
             txtID.Text = string.Empty;
             txtSintomas.Text = string.Empty;
             txtRecomendaciones.Text = string.Empty;
@@ -212,15 +214,19 @@ namespace GDM.Presentation
             if (cmbPaciente.Items.Count > 0) cmbPaciente.SelectedIndex = 0;
             if (cmbMedicamento.Items.Count > 0) cmbMedicamento.SelectedIndex = 0;
 
-            if (dgvDatos.SelectedRows.Count > 0)
+            dgvDatos.ClearSelection();
+            if (dgvDatos.CurrentCell != null)
             {
-                dgvDatos.ClearSelection();
+                dgvDatos.CurrentCell = null;
             }
+            _limpiandoFormulario = false;
             cmbMedico.Focus();
         }
 
         private void dgvDatos_SelectionChanged(object sender, EventArgs e)
         {
+            if (_limpiandoFormulario) return;
+
             if (dgvDatos.SelectedRows.Count > 0)
             {
                 var v = (Visita)dgvDatos.SelectedRows[0].DataBoundItem;

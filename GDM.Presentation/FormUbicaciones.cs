@@ -12,6 +12,7 @@ namespace GDM.Presentation
     {
         private readonly UbicacionBLL _bll = new UbicacionBLL();
         private List<Ubicacion> _listaOriginal = new List<Ubicacion>();
+        private bool _limpiandoFormulario = false;
 
         public FormUbicaciones()
         {
@@ -150,20 +151,25 @@ namespace GDM.Presentation
 
         private void LimpiarFormulario()
         {
+            _limpiandoFormulario = true;
             txtID.Text = string.Empty;
             txtDescripcion.Text = string.Empty;
             txtEstante.Text = string.Empty;
             txtTramo.Text = string.Empty;
             txtCelda.Text = string.Empty;
             cmbEstado.SelectedIndex = 0;
-            if (dgvDatos.SelectedRows.Count > 0)
+            dgvDatos.ClearSelection();
+            if (dgvDatos.CurrentCell != null)
             {
-                dgvDatos.ClearSelection();
+                dgvDatos.CurrentCell = null;
             }
+            _limpiandoFormulario = false;
         }
 
         private void dgvDatos_SelectionChanged(object sender, EventArgs e)
         {
+            if (_limpiandoFormulario) return;
+
             if (dgvDatos.SelectedRows.Count > 0)
             {
                 var ubi = (Ubicacion)dgvDatos.SelectedRows[0].DataBoundItem;

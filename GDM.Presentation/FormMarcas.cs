@@ -12,6 +12,7 @@ namespace GDM.Presentation
     {
         private readonly MarcaBLL _bll = new MarcaBLL();
         private List<Marca> _listaOriginal = new List<Marca>();
+        private bool _limpiandoFormulario = false;
 
         public FormMarcas()
         {
@@ -132,17 +133,22 @@ namespace GDM.Presentation
 
         private void LimpiarFormulario()
         {
+            _limpiandoFormulario = true;
             txtID.Text = string.Empty;
             txtDescripcion.Text = string.Empty;
             cmbEstado.SelectedIndex = 0;
-            if (dgvDatos.SelectedRows.Count > 0)
+            dgvDatos.ClearSelection();
+            if (dgvDatos.CurrentCell != null)
             {
-                dgvDatos.ClearSelection();
+                dgvDatos.CurrentCell = null;
             }
+            _limpiandoFormulario = false;
         }
 
         private void dgvDatos_SelectionChanged(object sender, EventArgs e)
         {
+            if (_limpiandoFormulario) return;
+
             if (dgvDatos.SelectedRows.Count > 0)
             {
                 var marca = (Marca)dgvDatos.SelectedRows[0].DataBoundItem;
