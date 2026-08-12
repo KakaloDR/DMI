@@ -1,0 +1,30 @@
+## Ignore Visual Studio & .NET temporary/build files
+[Oo]bj/
+[Bb]in/
+[Dd]ebug/
+[Rr]elease/
+
+# User-specific files
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio cache/options directory
+.vs/
+# Generated files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.dbmdl
+*.lsproj
+*.userquery
+
+# Rider
+.idea/
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+Propietaria.rar
